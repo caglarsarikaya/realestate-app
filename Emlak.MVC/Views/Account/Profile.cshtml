@@ -1,0 +1,121 @@
+﻿@model ProfileViewModel
+@{
+    ViewBag.Title = Model.Username + " Profili Düzenle";
+    Layout = "~/Views/Shared/_mainLayout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="listing listing--properties-list">
+            <header class="listing__header">
+                <h1 class="listing__title">@Model.Username 'ın Profil Sayfası</h1>
+                <h2 class="listing__headline">Kişisel bilgilerinizi düzenleyebilirsiniz</h2>
+            </header>
+            <div class="listing__panel">
+                <span class="listing__header-text listing__header-text--edit">
+                    @if (HttpContext.Current.User.IsInRole("Passive"))
+                    {
+                        <span>@Html.ValidationSummary()</span>
+                        <a href="@Url.Action("ResendActivation","Account")">Aktivasyon kodunu tekrar yolla</a>
+                    }
+                </span>
+            </div>
+            <div class="listing__main">
+                <div class="form-property">
+                    @Html.ValidationSummary()
+                    @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-property__form js-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <header class="form-property__header">
+                            <h3 data-rel="#form-property-block-2" class="form-property__title js-form-property-title">
+                                Bilgiler
+                            </h3>
+                        </header>
+                        <div id="form-property-block-2" class="form-property__block js-form-block">
+                            <div class="form-property__row-item">
+                                <div class="form-property__group form-group">
+                                    @Html.LabelFor(x => x.Name, new { @class = "form-property__label control-label" })
+                                    @Html.TextBoxFor(x => x.Name, new { @class = "form-property__control form-control form-property__control form-control--text" })
+                                </div>
+                                <div class="form-property__group form-group">
+                                    @Html.LabelFor(x => x.Surname, new { @class = "form-property__label control-label" })
+                                    @Html.TextBoxFor(x => x.Surname, new { @class = "form-property__control form-control form-property__control form-control--text" })
+                                </div>
+                                <div class="form-property__group form-group">
+                                    @Html.LabelFor(x => x.Email, new { @class = "form-property__label control-label" })
+                                    @Html.TextBoxFor(x => x.Email, new { @class = "form-property__control form-control form-property__control form-control--text" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-property__block form-property__block--submit">
+                            <div class="form-property__buttons">
+                                <button class="form-property__btn form-property__btn--action" type="submit">
+                                    Kaydet
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    <hr>
+                    @Html.ValidationSummary()
+                    @using (Html.BeginForm("ChangePassword", "Account", FormMethod.Post, new { @class = "form-property__form js-form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <header class="form-property__header">
+                            <h3 data-rel="#form-property-block-5" class="form-property__title js-form-property-title">
+                                Şifreyi değiştir
+                            </h3>
+                        </header>
+                        <div id="form-property-block-5" class="form-property__block js-form-block">
+                            <div class="form-property__row-item">
+                                <div class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="row">
+                                        <div class="form-property__group--large form-group">
+                                            @Html.LabelFor(x => x.OldPassword, new
+                                       {
+                                           @class = "form-property__label control-label"
+                                       })
+                                            @Html.TextBoxFor(x => x.OldPassword, new { @class = "form-property__control form-control search__control--text", type = "password" })
+                                        </div>
+                                        <div class="form-property__group--large form-group">
+                                            @Html.LabelFor(x => x.Password, new
+                                       {
+                                           @class = "form-property__label control-label"
+                                       })
+                                            @Html.TextBoxFor(x => x.Password, new { @class = "form-property__control form-control search__control--text", type = "password" })
+                                        </div>
+                                        <div class="form-property__group--large form-group">
+                                            @Html.LabelFor(x => x.ConfirmPassword, new
+                                       {
+                                           @class = "form-property__label control-label"
+                                       })
+                                            @Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-property__control form-control search__control--text", type = "password" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-8">
+                                    <div class="row">
+                                        <div class="form-property__group--middle">
+                                            <h5>Uyarı</h5>
+                                            <p>Şifreyi unutmayın :)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-property__block form-property__block--submit">
+                            <div class="form-property__buttons">
+                                <button class="form-property__btn form-property__btn--action" type="submit">
+                                    Şifreyi Değiştir
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+            </div>
+        </div>
+      
+        <div class="clearfix"></div>
+    </div>
+</div>
